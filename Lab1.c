@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> //We include dynamic memory allocation
+#include <ctype.h>  //for checking the Expression
 
 // Colors to emphasize text
 #define GREEN "\x1b[32m"
@@ -20,8 +21,10 @@
 void Menu();
 void ProgDesc();
 void Execute();
-char *getInfix();
+char *getInfix(int size);
 int chooseOperation();
+int isValidExpression(const char *str);
+void ErrorMessage();
 
 int main()
 {
@@ -54,7 +57,7 @@ int main()
     }
     else
     {
-        printf(RED "invalid Input Try Again..." RESET "\n"); // Invalid Input
+        ErrorMessage();
         main();
     }
 }
@@ -96,10 +99,16 @@ void ProgDesc()
 
 void Execute() // Input and conversion
 {
-    int conOperation;
-    char *infixExpression = getInfix(); // Infix Input
+    int lenght;
 
-    conOperation = chooseOperation(); // function for detailed code "Choose operations"
+    // Ask for input size
+    printf("Enter the size of the infix equation: ");
+    scanf("%d", &lenght);
+
+    int conOperation;
+
+    char *infixExpression = getInfix(lenght); // Infix Input
+    conOperation = chooseOperation();         // function for detailed code "Choose operations"
 
     switch (conOperation) // Operation
     {
@@ -108,8 +117,53 @@ void Execute() // Input and conversion
         return;
 
     case 1:
-        // infix to postfix (Richelle)
-        // Evaluating the expression (Cherlie)
+        printf(GREEN "---INFIX TO POSTFIX---" RESET "\n");
+        char *stack = (char *)malloc((lenght + 1) * sizeof(char));
+        char *postFix = (char *)malloc((lenght + 1) * sizeof(char));
+        int postfixIndex = 0;
+        int stackIndex = 0;
+        int i;
+
+        for (i = 0; i < lenght; i++)
+        {
+            if (isdigit(infixExpression[i]))
+            {
+                postFix[postfixIndex++] = infixExpression[i];
+            }
+            else if (infixExpression[i] == '*' || infixExpression[i] == '+' || infixExpression[i] == '-' || infixExpression[i] == '/')
+            {
+                // Pop all operators from stack with equal or higher precedence before pushing the current one
+                while (stackIndex > 0 &&
+                       ((stack[stackIndex - 1] == '*' || stack[stackIndex - 1] == '/') ||
+                        ((stack[stackIndex - 1] == '+' || stack[stackIndex - 1] == '-') && (infixExpression[i] == '+' || infixExpression[i] == '-'))))
+                {
+                    postFix[postfixIndex++] = stack[--stackIndex];
+                }
+                // Push the current operator onto the stack
+                stack[stackIndex++] = infixExpression[i];
+            }
+        }
+
+        // Pop remaining operators in the stack
+        while (stackIndex > 0)
+        {
+            postFix[postfixIndex++] = stack[--stackIndex];
+        }
+
+        postFix[postfixIndex] = '\0'; // Null-terminate the postfix expression
+
+        printf(GREEN "POSTFIX: %s" RESET "\n\n", postFix);
+
+        // Display stack (for debugging)
+        printf(GREEN "STACK: ");
+        for (i = 0; i < stackIndex; i++)
+        {
+            printf("%c ", stack[i]);
+        }
+        printf(RESET "\n\n");
+
+        free(stack);
+        free(postFix);
         break;
 
     case 2:
@@ -119,24 +173,19 @@ void Execute() // Input and conversion
         break;
 
     default:
-        printf(RED "Invalid Input Try Again..." RESET "\n");
+        ErrorMessage();
         break;
     }
 
     if (infixExpression != NULL)
     {
-        printf("You entered: %s", infixExpression);
+        printf("You entered: %s\n", infixExpression);
         free(infixExpression); // Free allocated memory
     }
 }
 
-char *getInfix()
+char *getInfix(int size)
 {
-    int size;
-
-    // Ask for input size
-    printf("Enter the size of the infix equation: ");
-    scanf("%d", &size);
 
     // Allocate memory dynamically
     char *infix = (char *)malloc((size + 1) * sizeof(char)); // +1 for null terminator
@@ -153,7 +202,16 @@ char *getInfix()
     printf("Enter infix expression: ");
     fgets(infix, size + 1, stdin); // Safe input method
 
-    return infix; // Return the allocated string
+    if (isValidExpression(infix))
+    { // Checking if Input is Valid
+        printf(GREEN "\nValid expression" RESET "\n");
+        return infix;
+    }
+    else
+    {
+        ErrorMessage();
+        Execute();
+    }
 }
 
 int chooseOperation()
@@ -169,4 +227,26 @@ int chooseOperation()
     scanf("%d", &num);
 
     return num;
+}
+
+int isValidExpression(const char *str)
+{
+    while (*str)
+    {
+        // Check if the character is a number, operator, parentheses, or space
+        if (!(isdigit(*str) ||                                                           // ✅ Numbers (0-9)
+              *str == '+' || *str == '-' || *str == '*' || *str == '/' || *str == '%' || // ✅ Operators
+              *str == '(' || *str == ')' ||                                              // ✅ Parentheses
+              isspace(*str)))                                                            // ✅ Spaces (allowed as delimiters)
+        {
+            return 0; // ❌ Invalid character found
+        }
+        str++; // Move to the next character
+    }
+    return 1; // ✅ String is valid
+}
+
+void ErrorMessage()
+{
+    printf(RED "Invalid Input Try Again..." RESET "\n");
 }
