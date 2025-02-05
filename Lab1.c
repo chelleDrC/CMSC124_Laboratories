@@ -27,19 +27,19 @@ int main()
     scanf(" %c", &choice);
 
     // Choices
-    if (choice == 'P' || 'p')
+    if (choice == 'P' || choice == 'p')
     { // Program Description
         printf("\n---PROGRAM DESCRIPTION---\n");
         ProgDesc();
         main();
     }
-    else if (choice == 'E' || 'e')
+    else if (choice == 'E' || choice == 'e')
     { // Program Execution
         printf("\n---EVALUATE EXPRESSION(S)---\n");
         Execute();
         main();
     }
-    else if (choice == 'X' || 'x')
+    else if (choice == 'X' || choice == 'x')
     { // Exiting the Program
         printf("---TERMINATING PROGRAM---");
         return 0;
