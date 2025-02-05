@@ -21,19 +21,7 @@ void Menu();
 void ProgDesc();
 void Execute();
 char *getInfix();
-int chooseOperation()
-{
-    int num;
-
-    printf(GREEN "---CHOOSE YOUR CONVERSION---" RESET "\n");
-    printf("[0] BACK TO MENU\n");
-    printf("[1] infix - postfix\n");
-    printf("[2] Cherlie feature\n");
-    printf("Choose: ");
-    scanf("%d", &num);
-
-    return num;
-}
+int chooseOperation();
 
 int main()
 {
@@ -106,26 +94,27 @@ void ProgDesc()
     printf("[Another Teammate's Name] Designed the menu system and input handling.\n\n");
 }
 
-void Execute()
+void Execute() // Input and conversion
 {
     int conOperation;
-    char *infixExpression = getInfix(); // Get input expression
+    char *infixExpression = getInfix(); // Infix Input
 
-    conOperation = chooseOperation();
+    conOperation = chooseOperation(); // function for detailed code "Choose operations"
 
-    switch (conOperation)
+    switch (conOperation) // Operation
     {
     case 0:
-        printf(GREEN "---GOING TO MAIN MENU---" RESET "\n");
+        printf(GREEN "---GOING TO MAIN MENU---" RESET "\n"); // Return to main menu
         return;
 
     case 1:
-        // infix to postfix
-
+        // infix to postfix (Richelle)
+        // Evaluating the expression (Cherlie)
         break;
 
     case 2:
-        // cherlie feature
+        // CHERLIE HERE (ikaw bahala anong type of conversion imoha)
+        // Evaluating the expression (Cherlie)
 
         break;
 
@@ -165,4 +154,19 @@ char *getInfix()
     fgets(infix, size + 1, stdin); // Safe input method
 
     return infix; // Return the allocated string
+}
+
+int chooseOperation()
+
+{
+    int num;
+
+    printf(GREEN "---CHOOSE YOUR CONVERSION---" RESET "\n");
+    printf("[0] BACK TO MENU\n");
+    printf("[1] infix - postfix\n");
+    printf("[2] Cherlie feature\n");
+    printf("Choose: ");
+    scanf("%d", &num);
+
+    return num;
 }
