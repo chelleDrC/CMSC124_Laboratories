@@ -154,14 +154,6 @@ void Execute() // Input and conversion
 
         printf(GREEN "POSTFIX: %s" RESET "\n\n", postFix);
 
-        // Display stack (for debugging)
-        printf(GREEN "STACK: ");
-        for (i = 0; i < stackIndex; i++)
-        {
-            printf("%c ", stack[i]);
-        }
-        printf(RESET "\n\n");
-
         free(stack);
         free(postFix);
         break;
