@@ -76,14 +76,14 @@ void ProgDesc()
     printf("3.Handle invalid expressions with appropriate error messages.\n\n");
 
     printf("---MENU OPTIONS---\n");
-    printf("[P] Program Description – Displays details about the program, development timeline, and contributors.\n");
-    printf("[E] Evaluate Expression(s) – Allows users to input an infix expression, convert it to postfix, and evaluate it.\n");
-    printf("[X] Exit – Exits the program immediately.\n\n");
+    printf("[P] Program Description Displays details about the program, development timeline, and contributors.\n");
+    printf("[E] Evaluate Expression(s) Allows users to input an infix expression, convert it to postfix, and evaluate it.\n");
+    printf("[X] Exit Exits the program immediately.\n\n");
 
     printf("---CONTRIBUTORS & ROLES---\n");
-    printf("[Your Name] – Implemented infix-to-postfix conversion.\n");
-    printf("[Teammate’s Name] – Developed postfix evaluation logic.\n");
-    printf("[Another Teammate’s Name] – Designed the menu system and input handling.\n\n");
+    printf("[Your Name] Implemented infix-to-postfix conversion.\n");
+    printf("[Teammate's Name]  Developed postfix evaluation logic.\n");
+    printf("[Another Teammate's Name] Designed the menu system and input handling.\n\n");
 }
 void Execute()
 {
