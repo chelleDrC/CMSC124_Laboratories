@@ -9,6 +9,9 @@
 //  Date: Feb 5, 2025 - Feb
 
 #include <stdio.h>
+#include <stdlib.h> //We include dynamic memory allocation
+
+// Colors to emphasize text
 #define GREEN "\x1b[32m"
 #define RED "\x1b[41m"
 #define RESET "\x1b[0m"
@@ -17,6 +20,20 @@
 void Menu();
 void ProgDesc();
 void Execute();
+char *getInfix();
+int chooseOperation()
+{
+    int num;
+
+    printf(GREEN "---CHOOSE YOUR CONVERSION---" RESET "\n");
+    printf("[0] BACK TO MENU\n");
+    printf("[1] infix - postfix\n");
+    printf("[2] Cherlie feature\n");
+    printf("Choose: ");
+    scanf("%d", &num);
+
+    return num;
+}
 
 int main()
 {
@@ -87,21 +104,65 @@ void ProgDesc()
     printf("[Your Name] Implemented infix-to-postfix conversion.\n");
     printf("[Teammate's Name]  Developed postfix evaluation logic.\n");
     printf("[Another Teammate's Name] Designed the menu system and input handling.\n\n");
-
-    printf(RED "---REMINDER---" RESET "\n");
-    printf(RED "use C99 or later for VLAs (Variable-Length Arrays) to run this code" RESET "\n");
 }
+
 void Execute()
 {
-    // Richelle for infix to postfix
-    // alocate size for input dynamically
+    int conOperation;
+    char *infixExpression = getInfix(); // Get input expression
+
+    conOperation = chooseOperation();
+
+    switch (conOperation)
+    {
+    case 0:
+        printf(GREEN "---GOING TO MAIN MENU---" RESET "\n");
+        return;
+
+    case 1:
+        // infix to postfix
+
+        break;
+
+    case 2:
+        // cherlie feature
+
+        break;
+
+    default:
+        printf(RED "Invalid Input Try Again..." RESET "\n");
+        break;
+    }
+
+    if (infixExpression != NULL)
+    {
+        printf("You entered: %s", infixExpression);
+        free(infixExpression); // Free allocated memory
+    }
+}
+
+char *getInfix()
+{
     int size;
-    printf("Enter the size of infix equation: ");
-    scanf("%d", size);
 
-    char input[size];
-    printf("Enter infix: ");
-    scanf(" %s", input);
+    // Ask for input size
+    printf("Enter the size of the infix equation: ");
+    scanf("%d", &size);
 
-    printf(input);
+    // Allocate memory dynamically
+    char *infix = (char *)malloc((size + 1) * sizeof(char)); // +1 for null terminator
+    if (infix == NULL)
+    {
+        printf("Memory allocation failed!\n");
+        return NULL;
+    }
+
+    // Clear input buffer
+    getchar();
+
+    // Get infix expression from the user
+    printf("Enter infix expression: ");
+    fgets(infix, size + 1, stdin); // Safe input method
+
+    return infix; // Return the allocated string
 }
