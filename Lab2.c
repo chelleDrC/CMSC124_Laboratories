@@ -58,8 +58,6 @@ void stringExpansion()
     printf("\nEnter compressed string: ");
     scanf("%999s", input);
 
-    // Expansion logic goes here
-
     printf("\nExpanded string: [RESULT]\n");
 }
 
