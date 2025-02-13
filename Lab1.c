@@ -75,16 +75,15 @@ void Menu()
 // Display Proram Description
 void ProgDesc()
 {
-
     printf("Date: Feb 5, 2025 - Feb\n");
     printf("Developed by:\n");
     printf("Richelle S. de Arce (2023-15674)\n");
-    printf("Cherlie Joy Palarpalar (2023-XXXX)\n");
-    printf("Development Period: [Start Date] - [End Date]\n\n");
+    printf("Cherlie Joy Palarpalar (2023-16099)\n");
+    printf("Development Period: Feb 5, 2025 - Feb 13, 2025\n\n");
 
     printf(GREEN "---PROGRAM OVERVIEW---" RESET "\n");
     printf("1.Convert infix expressions to postfix notation and evaluate the expression.\n");
-    printf("2.Evaluate postfix notation to infix expression.\n");
+    printf("2.Evaluate postfix notation to infix expression.\n\n");
 
     printf(GREEN "---MENU OPTIONS---" RESET "\n");
     printf("[P] Program Description Displays details about the program, development timeline, and contributors.\n");
