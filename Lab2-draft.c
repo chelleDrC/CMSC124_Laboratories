@@ -23,11 +23,14 @@ int isValidCompressionString(const char *str);
 int isValidExpansionString(const char *str);
 int askRepeat();
 void ErrorMessage();
+void chooseOutputFormat(char *output, const char *input, int format);
 
 // Main function
 int main() {
     
     char choice;
+
+    system("cls");
 
     // Call the Menu function
     Menu();
@@ -87,7 +90,7 @@ void ProgDesc() {
 
     printf(GREEN "---PROGRAM OVERVIEW---" RESET "\n");
     printf("1.Perform string expansion and compression.\n");
-    printf("2.[PLACEHOLDER]\n\n");
+    printf("2.Output the string in either raw or spaced format. [EXTRA FEATURE]\n\n");
 
     printf(GREEN "---MENU OPTIONS---" RESET "\n");
     printf("[P] Program Description - Displays details about the program, development timeline, and contributors.\n");
@@ -96,9 +99,14 @@ void ProgDesc() {
     printf("[X] Exit - Exits the program immediately.\n\n");
 
     printf(GREEN "---CONTRIBUTORS & ROLES---" RESET "\n");
-    printf("Richelle | [PLACEHOLDER]\n");
-    printf("Cherlie | [PLACEHOLDER] \n");
-    printf("Cherlie & Richelle | [PLACEHOLDER]\n\n");
+    printf("Richelle | Implemented Menu System and String Compression.\n");
+    printf("Cherlie | Implementd String Expansion and output formatting.\n");
+    printf("Cherlie & Richelle | Implemented error handling.\n\n");
+
+    printf("Press any key to continue...");
+    while (getchar() != '\n'); // Clear the input buffer
+    getchar();
+    return;
 }
 
 // Function to expand the string
@@ -106,6 +114,7 @@ void ExpandString() {
     char input[100];
     char expanded[200];
     int i, j = 0, count;
+    int format;
 
     while (1) {
         printf("Enter a string to expand: ");
@@ -127,7 +136,8 @@ void ExpandString() {
                     count = count * 10 + (input[i] - '0');
                     i++;
                 }
-                for (int k = 0; k < count; k++) {
+                int k;
+                for (k = 0; k < count; k++) {
                     expanded[j++] = input[i];
                 }
             }
@@ -137,7 +147,25 @@ void ExpandString() {
         }
         expanded[j] = '\0';
 
-        printf(GREEN "Expanded string: %s\n", expanded);
+        do {
+            printf("[EXTRA FEATURE] Choose output format:\n");
+            printf("[1] Raw\n");
+            printf("[2] Spaced\n");
+            printf("Choice: ");
+            scanf("%d", &format);
+            if (format != 1 && format != 2) {
+            printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET);
+            }
+        } while (format != 1 && format != 2);
+
+        char formattedOutput[400];
+        chooseOutputFormat(formattedOutput, expanded, format);
+
+        printf(GREEN "Expanded string: %s\n", formattedOutput, RESET);
+
+        printf(RESET "Press any key to continue...");
+        while (getchar() != '\n'); // Clear the input buffer
+        getchar();
         break;
     }
 }
@@ -147,6 +175,7 @@ void CompressString() {
     char input[100];
     char compressed[200];
     int i, count, j = 0;
+    int format;
 
     while (1) {
         printf("Enter a string to compress: ");
@@ -175,7 +204,25 @@ void CompressString() {
         }
         compressed[j] = '\0';
 
-        printf(GREEN "Compressed string: %s\n", compressed);
+        do {
+            printf("[EXTRA FEATURE] Choose output format:\n");
+            printf("[1] Raw\n");
+            printf("[2] Spaced\n");
+            printf("Choice: ");
+            scanf("%d", &format);
+            if (format != 1 && format != 2) {
+            printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET);
+            }
+        } while (format != 1 && format != 2);
+
+        char formattedOutput[400];
+        chooseOutputFormat(formattedOutput, compressed, format);
+
+        printf(GREEN "Compressed string: %s\n", formattedOutput, RESET);
+
+        printf(RESET "Press any key to continue...");
+        while (getchar() != '\n'); // Clear the input buffer
+        getchar();
         break;
     }
 }
@@ -193,13 +240,17 @@ int isValidCompressionString(const char *str) {
 
 // Function to check if the string is valid for expansion
 int isValidExpansionString(const char *str) {
+    int hasDigit = 0;
     while (*str) {
         if (!isdigit(*str) && !isalpha(*str)) {
             return 0;
         }
+        if (isdigit(*str)) {
+            hasDigit = 1;
+        }
         str++;
     }
-    return 1;
+    return hasDigit;
 }
 
 // Function to ask user if they want to repeat the process
@@ -222,7 +273,7 @@ int askRepeat() {
                 return 0;
             }
         } else {
-            printf("Invalid choice. Please enter Y or N.\n");
+            printf(RED "Invalid choice. Please enter Y or N.\n" RESET);
         }
     }
 }
@@ -230,4 +281,21 @@ int askRepeat() {
 // Function to display error message
 void ErrorMessage() {
     printf(RED "Invalid input! Please try again.\n" RESET);
+}
+
+void chooseOutputFormat(char *output, const char *input, int format) {
+    int i, j = 0;
+    output[0] = '\0';  // Properly initialize the output string
+    
+    if (format == 1) {
+        strcpy(output, input);
+    } else {
+        for (i = 0; i < strlen(input); i++) {
+            if (i > 0) {
+                output[j++] = ' ';
+            }
+            output[j++] = input[i];
+        }
+        output[j] = '\0';  // Ensure null termination
+    }
 }
