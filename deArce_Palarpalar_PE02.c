@@ -30,7 +30,7 @@ int main() {
     
     char choice;
 
-    system("cls");
+    system("cls"); // Clear the screen
 
     // Call the Menu function
     Menu();
@@ -103,68 +103,76 @@ void ProgDesc() {
     printf("Cherlie | Implementd String Expansion and output formatting.\n");
     printf("Cherlie & Richelle | Implemented error handling.\n\n");
 
-    printf("Press any key to continue...");
     while (getchar() != '\n'); // Clear the input buffer
+    printf("Press enter to continue...");
     getchar();
     return;
 }
 
 // Function to expand the string
 void ExpandString() {
+    // Variables
     char input[100];
     char expanded[200];
     int i, j = 0, count;
     int format;
+    char formattedOutput[400];
 
-    while (1) {
-        printf("Enter a string to expand: ");
+    // Loop to handle invalid input
+    while (1) { 
+        printf("Enter a string to expand: "); 
         scanf("%s", input);
 
-        if (!isValidExpansionString(input) || isdigit(input[strlen(input) - 1])) {
-            ErrorMessage();
-            if (askRepeat()) {
+        if (!isValidExpansionString(input) || isdigit(input[strlen(input) - 1])) { // Check if the input is valid
+            ErrorMessage(); // Display error message
+            if (askRepeat()) {  // Ask user if they want to repeat the process
                 continue;
             } else {
                 break;
             }
         }
 
+        // Loop to expand the string
         for (i = 0; i < strlen(input); i++) {
-            if (isdigit(input[i])) {
-                count = 0;
-                while (isdigit(input[i])) {
+            if (isdigit(input[i])) {   // Check if the character is a digit
+                count = 0; // Initialize count to 0
+                while (isdigit(input[i])) { // Loop to get the count
                     count = count * 10 + (input[i] - '0');
                     i++;
                 }
-                int k;
-                for (k = 0; k < count; k++) {
+                // Loop to add the character to the expanded string
+                for (int k = 0; k < count; k++) {
                     expanded[j++] = input[i];
                 }
             }
             else {
-                expanded[j++] = input[i];
+                expanded[j++] = input[i];   // Add the character to the expanded string
             }
         }
-        expanded[j] = '\0';
+        expanded[j] = '\0'; // Ensure null termination
 
+        // Loop to choose output format
         do {
-            printf("[EXTRA FEATURE] Choose output format:\n");
+            printf("[EXTRA FEATURE] Choose output format:\n"); 
             printf("[1] Raw\n");
             printf("[2] Spaced\n");
             printf("Choice: ");
-            scanf("%d", &format);
-            if (format != 1 && format != 2) {
-            printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET);
+
+            if (scanf("%d", &format) != 1) { // Check if the input is a number
+                while (getchar() != '\n'); // Clear the input buffer
+                format = 0; // Set to an invalid value
+            }
+            if (format != 1 && format != 2) { // Check if the input is 1 or 2
+                printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET); // Display error message
             }
         } while (format != 1 && format != 2);
 
-        char formattedOutput[400];
-        chooseOutputFormat(formattedOutput, expanded, format);
+        chooseOutputFormat(formattedOutput, expanded, format); // Choose output format
 
-        printf(GREEN "Expanded string: %s\n", formattedOutput, RESET);
+        printf(GREEN "Expanded string: %s\n", formattedOutput, RESET); // Display the expanded string in the format
 
-        printf(RESET "Press any key to continue...");
         while (getchar() != '\n'); // Clear the input buffer
+        printf(RESET "Press enter to continue...");
         getchar();
         break;
     }
@@ -172,56 +180,67 @@ void ExpandString() {
 
 // Function to compress the string
 void CompressString() {
+    // Variables
     char input[100];
     char compressed[200];
     int i, count, j = 0;
     int format;
+    char formattedOutput[400];
 
+    // Loop to handle invalid input
     while (1) {
         printf("Enter a string to compress: ");
         scanf("%s", input);
 
+        // Check if the input is valid
         if (!isValidCompressionString(input)) {
-            ErrorMessage();
-            if (askRepeat()) {
+            ErrorMessage(); // Display error message
+            if (askRepeat()) {  // Ask user if they want to repeat the process
                 continue;
             } else {
                 break;
             }
         }
 
+        // Loop to compress the string
         for (i = 0; i < strlen(input); i++) {
-            count = 1;
+            count = 1;  // Initialize count to 1
+            // Loop to count the number of consecutive characters for compression
             while (i < strlen(input) - 1 && input[i] == input[i + 1]) {
                 count++;
                 i++;
             }
-            if (count == 1) {
+
+            // Check if the count is 1
+            if (count == 1) { // If the count is 1, add the character to the compressed string
                 j += sprintf(&compressed[j], "%c", input[i]);
-            } else {
+            } else { // If the count is greater than 1, add the count and the character to the compressed string
                 j += sprintf(&compressed[j], "%d%c", count, input[i]);
             }
         }
-        compressed[j] = '\0';
+        compressed[j] = '\0'; // Ensure null termination
 
+        // Loop to choose output format
         do {
             printf("[EXTRA FEATURE] Choose output format:\n");
             printf("[1] Raw\n");
             printf("[2] Spaced\n");
             printf("Choice: ");
-            scanf("%d", &format);
-            if (format != 1 && format != 2) {
-            printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET);
+            if (scanf("%d", &format) != 1) { // Check if the input is a number
+                while (getchar() != '\n'); // Clear the input buffer
+                format = 0; // Set to an invalid value
+            }
+            if (format != 1 && format != 2) { // Check if the input is 1 or 2
+                printf(RED "Invalid choice. Please enter 1 or 2.\n" RESET);
             }
         } while (format != 1 && format != 2);
 
-        char formattedOutput[400];
-        chooseOutputFormat(formattedOutput, compressed, format);
+        chooseOutputFormat(formattedOutput, compressed, format);    // Choose output format
 
-        printf(GREEN "Compressed string: %s\n", formattedOutput, RESET);
+        printf(GREEN "Compressed string: %s\n", formattedOutput, RESET);    // Display the compressed string in the format
 
-        printf(RESET "Press any key to continue...");
         while (getchar() != '\n'); // Clear the input buffer
+        printf(RESET "Press enter to continue...");
         getchar();
         break;
     }
@@ -229,26 +248,28 @@ void CompressString() {
 
 // Function to check if the string is valid for compression
 int isValidCompressionString(const char *str) {
+    // Loop to check if the string is valid
     while (*str) {
-        if (!isalpha(*str)) {
+        if (!isalpha(*str)) { // If the character is not a letter, return 0
             return 0;
         }
-        str++;
+        str++; // Move to the next character
     }
     return 1;
 }
 
 // Function to check if the string is valid for expansion
 int isValidExpansionString(const char *str) {
-    int hasDigit = 0;
+    int hasDigit = 0;   // Initialize hasDigit to 0
+    // Loop to check if the string is valid
     while (*str) {
-        if (!isdigit(*str) && !isalpha(*str)) {
+        if (!isdigit(*str) && !isalpha(*str)) { // If the character is not a digit or a letter, return 0
             return 0;
         }
-        if (isdigit(*str)) {
+        if (isdigit(*str)) { // If the character is a digit, set hasDigit to 1
             hasDigit = 1;
         }
-        str++;
+        str++; // Move to the next character
     }
     return hasDigit;
 }
@@ -256,10 +277,11 @@ int isValidExpansionString(const char *str) {
 // Function to ask user if they want to repeat the process
 int askRepeat() {
     char input[10];
+    // Loop to ask user if they want to repeat the process
     while (1) {
-        if (input[strlen(input) - 1] != '\n') {
+        if (input[strlen(input) - 1] != '\n') { // If the last character is not a newline, clear the input buffer
             int c;
-            while ((c = getchar()) != '\n' && c != EOF);
+            while ((c = getchar()) != '\n' && c != EOF); // Clear the input buffer
         }
 
         printf("Do you want to repeat the process? (Y/N): ");
@@ -267,9 +289,9 @@ int askRepeat() {
 
         // Check if the input is a single character followed by a newline
         if (strlen(input) == 2 && (input[0] == 'Y' || input[0] == 'y' || input[0] == 'N' || input[0] == 'n')) {
-            if (input[0] == 'Y' || input[0] == 'y') {
+            if (input[0] == 'Y' || input[0] == 'y') { // If the input is Y or y, return 1
                 return 1;
-            } else if (input[0] == 'N' || input[0] == 'n') {
+            } else if (input[0] == 'N' || input[0] == 'n') { // If the input is N or n, return 0
                 return 0;
             }
         } else {
@@ -283,18 +305,21 @@ void ErrorMessage() {
     printf(RED "Invalid input! Please try again.\n" RESET);
 }
 
+// Function to choose output format
 void chooseOutputFormat(char *output, const char *input, int format) {
     int i, j = 0;
     output[0] = '\0';  // Properly initialize the output string
     
-    if (format == 1) {
+    if (format == 1) { // If the format is 1, copy the input to the output
         strcpy(output, input);
-    } else {
+    } else { // If the format is 2, add spaces between characters
+        // Loop to add spaces between characters
         for (i = 0; i < strlen(input); i++) {
-            if (i > 0) {
+            // Add a space if the character is not a digit or the previous character is not a digit
+            if (i > 0 && !(isdigit(input[i]) && isdigit(input[i - 1]))) { 
                 output[j++] = ' ';
             }
-            output[j++] = input[i];
+            output[j++] = input[i]; // Add the character to the output
         }
         output[j] = '\0';  // Ensure null termination
     }
