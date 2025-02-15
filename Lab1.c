@@ -17,7 +17,7 @@
 void Menu();
 void ProgDesc();
 void Execute();
-void getInfix(char *infix, int size);
+int getInfix(char *infix, int size);
 int chooseOperation();
 int isValidExpression(const char *str);
 void ErrorMessage();
@@ -103,9 +103,14 @@ void Execute() // Input and conversion
     length = 999; // Maximum length of the inputcls
     int conOperation;
 
-    char InputExpression[1000];        // Infix Input
-    getInfix(InputExpression, length); // Get infix input
-    conOperation = chooseOperation();  // function for detailed code "Choose operations"
+    char InputExpression[1000];            // Infix Input
+    if (getInfix(InputExpression, length)) // Get infix input and check if user wants to Exit to main menu
+    {
+        printf(GREEN "---GOING TO MAIN MENU---" RESET "\n");
+        return;
+    }
+
+    conOperation = chooseOperation(); // function for detailed code "Choose operations"
 
     switch (conOperation) // Operation
     {
@@ -135,25 +140,36 @@ void Execute() // Input and conversion
     }
 }
 
-void getInfix(char *infix, int size)
+int getInfix(char *infix, int size)
 {
-    // Clear input buffer
-    getchar();
-
-    // Get infix expression from the user
-    printf("You can Enter an Infix or Postfix Expression to be converted vice versa\n");
-    printf("(This is an aditional Feature)\n");
-    printf("Enter Expression: ");
-    fgets(infix, size + 1, stdin); // Safe input method
-
-    if (isValidExpression(infix))
-    { // Checking if Input is Valid
-        printf(GREEN "\nValid expression" RESET "\n");
-    }
-    else
+    while (1)
     {
-        ErrorMessage();
-        return;
+        // Clear input buffer
+        getchar();
+
+        // Get infix expression from the user
+        printf("You can Enter an Infix or Postfix Expression to be converted vice versa\n");
+        printf("(Enter [0] to return to the exit menu.)\n");
+        printf("(This is an additional Feature)\n");
+        printf("Enter Expression: ");
+        scanf(" %[^\n]", infix);
+
+        if (strcmp(infix, "0") == 0)
+        {
+            return 1; // Exit if the user enters '0'
+            break;
+        }
+
+        if (isValidExpression(infix))
+        {
+            printf(GREEN "\nValid expression" RESET "\n");
+            return 0;
+            break; // Exit the loop if the expression is valid
+        }
+        else
+        {
+            ErrorMessage();
+        }
     }
 }
 
