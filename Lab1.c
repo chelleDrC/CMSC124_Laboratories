@@ -29,15 +29,15 @@ int precedence(char op);
 // Main function
 int main()
 {
-    char choice;
 
+    char choice;
     // Call the Menu function
     Menu();
 
     // Input
     printf("Choice: ");
     scanf(" %c", &choice);
-
+    system("cls");
     // Choices
     if (choice == 'P' || choice == 'p')
     { // Program Description
@@ -106,6 +106,7 @@ void Execute() // Input and conversion
     char InputExpression[1000];            // Infix Input
     if (getInfix(InputExpression, length)) // Get infix input and check if user wants to Exit to main menu
     {
+        system("cls");
         printf(GREEN "---GOING TO MAIN MENU---" RESET "\n");
         return;
     }
@@ -115,6 +116,7 @@ void Execute() // Input and conversion
     switch (conOperation) // Operation
     {
     case 0:
+        system("cls");
         printf(GREEN "---GOING TO MAIN MENU---" RESET "\n"); // Return to main menu
         return;
         break;
@@ -183,7 +185,7 @@ int chooseOperation()
     printf("[2] Postfix - infix (additional Feature)\n");
     printf("Choose: ");
     scanf(" %d", &num);
-
+    system("cls");
     return num;
 }
 
