@@ -28,6 +28,7 @@ int main()
     char choice;
     char infix[MAX], postfix[MAX], resultInfix[MAX];
     int result;
+    int yesNo;
 
     do
     {
@@ -44,6 +45,8 @@ int main()
             displayProgramDescription();
             break;
         case 'E':
+        inputInfix:
+
             printf("Enter infix expression: ");
             getchar(); // Clear the newline character left by scanf
             fgets(infix, sizeof(infix), stdin);
@@ -52,6 +55,18 @@ int main()
             if (!isValidExpression(infix))
             {
                 printf(RED "Invalid infix expression.\n" RESET);
+
+                printf("Do you want to try again? (1 - Yes, 0 - No): ");
+                scanf("%d", &yesNo);
+                if (yesNo == 1)
+                {
+                    goto inputInfix;
+                    break;
+                }
+                else
+                {
+                    break;
+                }
             }
             else
             {
@@ -60,9 +75,22 @@ int main()
                 system("cls");
                 printf("Postfix Expression: %s\n", postfix);
                 printf("Result: %d\n", result);
+                printf("Do you want to try again? (1 - Yes, 0 - No): ");
+                scanf("%d", &yesNo);
+                if (yesNo == 1)
+                {
+                    goto inputInfix;
+                    break;
+                }
+                else
+                {
+                    break;
+                }
             }
             break;
         case 'F':
+        inputPostfix:
+
             printf("Enter postfix expression: ");
             getchar(); // Clear the newline character left by scanf
             fgets(postfix, sizeof(postfix), stdin);
@@ -71,6 +99,18 @@ int main()
             postfixToInfix(postfix, resultInfix);
             system("cls");
             printf("Infix Expression: %s\n", resultInfix);
+            printf("Do you want to try again? (1 - Yes, 0 - No): ");
+            scanf("%d", &yesNo);
+            if (yesNo == 1)
+            {
+                goto inputPostfix;
+                break;
+            }
+            else
+            {
+                break;
+            }
+
             break;
         case 'X':
             system("cls");
