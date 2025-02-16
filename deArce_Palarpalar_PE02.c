@@ -317,7 +317,7 @@ int isValidExpansionString(const char *str)
         }
         str++; // Move to the next character
     }
-    return hasDigit;
+    return 1; // Return 1 if the string is valid (contains only letters/numbers)
 }
 
 // Function to ask user if they want to repeat the process
