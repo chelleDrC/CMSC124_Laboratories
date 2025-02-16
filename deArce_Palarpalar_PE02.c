@@ -247,6 +247,18 @@ void CompressString() {
 }
 
 // Function to check if the string is valid for compression
+int isValidCompressionString(const char *str) {
+    // Loop to check if the string is valid
+    while (*str) {
+        if (!isalpha(*str)) { // If the character is not a letter, return 0
+            return 0;
+        }
+        str++; // Move to the next character
+    }
+    return 1;
+}
+
+// Function to check if the string is valid for expansion
 int isValidExpansionString(const char *str) {
     while (*str) {
         if (!isdigit(*str) && !isalpha(*str)) { // If the character is not a digit or letter, return 0
@@ -255,22 +267,6 @@ int isValidExpansionString(const char *str) {
         str++; // Move to the next character
     }
     return 1; // Return 1 if the string is valid (contains only letters/numbers)
-}
-
-// Function to check if the string is valid for expansion
-int isValidExpansionString(const char *str) {
-    int hasDigit = 0;   // Initialize hasDigit to 0
-    // Loop to check if the string is valid
-    while (*str) {
-        if (!isdigit(*str) && !isalpha(*str)) { // If the character is not a digit or a letter, return 0
-            return 0;
-        }
-        if (isdigit(*str)) { // If the character is a digit, set hasDigit to 1
-            hasDigit = 1;
-        }
-        str++; // Move to the next character
-    }
-    return hasDigit;
 }
 
 // Function to ask user if they want to repeat the process
