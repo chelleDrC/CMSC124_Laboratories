@@ -92,6 +92,7 @@ int main()
         inputPostfix:
 
             printf("Enter postfix expression: ");
+            printf("Note: must be a postfix expression to work\n");
             getchar(); // Clear the newline character left by scanf
             fgets(postfix, sizeof(postfix), stdin);
             postfix[strcspn(postfix, "\n")] = '\0'; // Remove the newline character
