@@ -1,1 +1,1 @@
-postFix[k++] = infixExpression[i];
+
