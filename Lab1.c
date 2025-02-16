@@ -21,9 +21,9 @@ int getInfix(char *infix, int size);
 int chooseOperation();
 int isValidExpression(const char *str);
 void ErrorMessage();
-void infixToPostfix(const char *infixExpression);
+int infixToPostfix(const char *infixExpression);
 int evaluatePostfix(const char *postFix);
-void postfixToInfix(const char *postFix, char *result);
+int postfixToInfix(const char *postFix, char *result);
 int precedence(char op);
 
 // Main function
@@ -123,16 +123,27 @@ void Execute() // Input and conversion
 
     case 1:
         printf(GREEN "---INFIX TO POSTFIX---" RESET "\n");
-        infixToPostfix(InputExpression); // Convert infix to postfix
-        Execute();
+        if (infixToPostfix(InputExpression))
+        {
+            Execute();
+        }
+        else
+        {
+            return;
+        }
         break;
 
     case 2:
         printf(GREEN "---POSTFIX TO INFIX---" RESET "\n");
         char result[1000];
-        postfixToInfix(InputExpression, result); // Convert postfix to infix
-        printf(GREEN "INFIX: %s" RESET "\n\n", result);
-        Execute();
+        if (postfixToInfix(InputExpression, result))
+        {              // Convert postfix to infix
+            Execute(); // want to repeat the process
+        }
+        else
+        {
+            return; // if do not repeat process
+        }
 
         break;
 
@@ -144,6 +155,7 @@ void Execute() // Input and conversion
 
 int getInfix(char *infix, int size)
 {
+
     while (1)
     {
         // Clear input buffer
@@ -227,11 +239,12 @@ int precedence(char op)
     }
 }
 
-void postfixToInfix(const char *postFix, char *result)
+int postfixToInfix(const char *postFix, char *result)
 {
     char *stack[100];
     int stackIndex = 0;
     int i = 0;
+    int choice;
 
     while (postFix[i] != '\0')
     {
@@ -270,6 +283,19 @@ void postfixToInfix(const char *postFix, char *result)
     }
 
     strcpy(result, stack[--stackIndex]);
+    printf(GREEN "INFIX: %s" RESET "\n\n", result);
+
+    printf("Do you want to repeat the process? (y/n): ");
+    scanf(" %c", &choice);
+
+    if (choice == 'y' || choice == 'Y')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int evaluatePostfix(const char *postFix)
@@ -323,7 +349,7 @@ int evaluatePostfix(const char *postFix)
     return stack[0]; // The result is the last element in the stack
 }
 
-void infixToPostfix(const char *infixExpression)
+int infixToPostfix(const char *infixExpression)
 {
     int length = strlen(infixExpression);
 
@@ -333,6 +359,7 @@ void infixToPostfix(const char *infixExpression)
     int postfixIndex = 0; // Index for the postfix expression
     int stackIndex = 0;   // Index for the stack
     int i;
+    int choice;
 
     for (i = 0; i < length; i++)
     {
@@ -394,4 +421,16 @@ void infixToPostfix(const char *infixExpression)
 
     int result = evaluatePostfix(postFix); // Evaluate the postfix expression
     printf(GREEN "Evaluating Expression: %d" RESET "\n\n", result);
+
+    printf("Do you want to repeat the process? (y/n): ");
+    scanf(" %c", &choice);
+
+    if (choice == 'y' || choice == 'Y')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
