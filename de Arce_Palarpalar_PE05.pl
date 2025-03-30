@@ -1,3 +1,13 @@
+/*
+   Program: Ancestor Identification System
+   Description: This Prolog program determines the relationships between family members.
+   Programmers: Richelle de Arce and Cherlie Palarpalar
+   Task Division:
+      - Richelle de Arce: Implemented facts for family relationships and defined rules for grandparents and parents.
+      - Cherlie Palarpalar: Created the ancestree and defined rules for siblings, aunts, uncles, and cousins.
+      - Both: Collaborated on the overall structure and logic of the program.
+*/
+
 % FACTS
 
 % Male members
@@ -92,24 +102,24 @@ parent(julius_basanes, julirose_basanes).
 % RULES
 
 % Grandparent rules
-grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
-granpa(X, Y) :- grandparent(X, Y), male(X).
-granma(X, Y) :- grandparent(X, Y), female(X).
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).   % X is a grandparent of Y if X is a parent of Z and Z is a parent of Y.
+granpa(X, Y) :- grandparent(X, Y), male(X).         % X is a grandfather of Y if X is a grandparent of Y and X is male.
+granma(X, Y) :- grandparent(X, Y), female(X).       % X is a grandmother of Y if X is a grandparent of Y and X is female.
 
 % Father and mother
-father(X, Y) :- parent(X, Y), male(X).
-mother(X, Y) :- parent(X, Y), female(X).
+father(X, Y) :- parent(X, Y), male(X).              % X is the father of Y if X is a parent of Y and X is male.
+mother(X, Y) :- parent(X, Y), female(X).            % X is the mother of Y if X is a parent of Y and X is female.
 
 % Son and daughter
-son(X, Y) :- parent(Y, X), male(X).
-daughter(X, Y) :- parent(Y, X), female(X).
+son(X, Y) :- parent(Y, X), male(X).                 % X is the son of Y if Y is a parent of X and X is male.
+daughter(X, Y) :- parent(Y, X), female(X).          % X is the daughter of Y if Y is a parent of X and X is female.
 
 % Sibling rule
-sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y. % X and Y are siblings if they share a parent Z and X is not equal to Y.
 
 % Aunt and Uncle rules
-aunt(X, Y) :- female(X), parent(Z, Y), sibling(X, Z).
-uncle(X, Y) :- male(X), parent(Z, Y), sibling(X, Z).
+aunt(X, Y) :- female(X), parent(Z, Y), sibling(X, Z). % X is an aunt of Y if X is female, Z is a parent of Y, and X is a sibling of Z.
+uncle(X, Y) :- male(X), parent(Z, Y), sibling(X, Z).  % X is an uncle of Y if X is male, Z is a parent of Y, and X is a sibling of Z.
 
 % Cousin rule
-cousin(X, Y) :- parent(A, X), parent(B, Y), sibling(A, B).
+cousin(X, Y) :- parent(A, X), parent(B, Y), sibling(A, B). % X and Y are cousins if their parents A and B are siblings.
