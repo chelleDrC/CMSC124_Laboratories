@@ -1,3 +1,12 @@
+/*
+   Program: Slayer Identification System
+   Description: This Prolog program determines the attributes of individuals based on their location and costumes. 
+                It also identifies the 'slayer' based on their eyebrow color.
+   Programmers: Richelle de Arce and Cherlie Palarpalar
+   Task Division:
+      - Richelle de Arce: Implemented location and costume rules, structured the database.
+      - Cherlie Palarpalar: Defined eyebrow color rules, implemented the slayer identification logic.
+*/
 
 % Defining locations of specific individuals
 location(nobita, 25).  % Nobita is at location 25
