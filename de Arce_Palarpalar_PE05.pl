@@ -4,7 +4,7 @@
    Programmers: Richelle de Arce and Cherlie Palarpalar
    Task Division:
       - Richelle de Arce: Implemented facts for family relationships and defined rules for grandparents and parents.
-      - Cherlie Palarpalar: Created the ancestree and defined rules for siblings, aunts, uncles, and cousins.
+      - Cherlie Palarpalar: Created the ancestry tree and defined rules for siblings, aunts, uncles, and cousins.
       - Both: Collaborated on the overall structure and logic of the program.
 */
 
