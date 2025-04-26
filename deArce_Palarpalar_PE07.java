@@ -55,7 +55,7 @@ public class deArce_Palarpalar_PE07 {
 }
 
 /**
- * Base Potion class (now implements Brewable).
+ * Base Potion class
  * Demonstrates encapsulation by using private fields and public methods to access them.
  * Demonstrates inheritance by serving as the parent class for specific potion types.
  */
@@ -82,7 +82,6 @@ class Potion implements Brewable {
         increasePotency();
     }
 
-    // Dynamic effect placeholder
     public void applyEffect() {
         System.out.println("Applying generic potion effect...");
     }
